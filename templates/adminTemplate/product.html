@@ -1,0 +1,306 @@
+{% extends 'adminTemplate/base.html' %} {% load static %} {% block body %}
+
+<div style="overflow-x:auto;" class="container">
+    <table class="table table-dark table-striped">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8" style="margin-top: 10px; margin-left:
+                    -15px; ">
+                    <h3 style="position: static;"><b>Products </b></h3>
+                </div>
+                
+                <div class="col-sm-4 text-end">
+
+                    <div class="mr-5">
+                        <a href='' class="btn btn-primary" style=" padding: 12px
+                            25px; margin-top: 10px; margin-right: -38px; position: static; padding-left:10px;" data-toggle="modal" data-target="#addModal"> <i class="fa-solid fa-plus"></i> Add New</a>
+
+                    </div>
+                </div><br><br>
+                <div class="col-13" >
+                    <table class="table table-bordered mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sno.</th>
+                                {% comment %} <th scope="col" >userid</th>
+                                <th scope="col">categoryid</th> {% endcomment %}
+                                <th scope="col">Thumbnail</th>
+                                <th scope="col">productname</th>
+                                <th scope="col">productdescription</th>
+                                <th scope="col">productTitle</th>
+                                <th scope="col">productqty</th>
+                                <th scope="col">productimages</th>
+                                <th scope="col">productprice</th>
+                                <th scope="col">productdiscountPercentage</th>
+                                <th scope="col">productdiscountPrice</th>
+                                <th scope="col">gsttax</th>
+                                <th scope="col">finalPrice</th>
+                                <th scope="col">status</th>
+                                <th scope="col">createdate</th>    
+                                <th scope="col">updatedate</th>                                
+                                <th scope="col">Update</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                
+                                {% for i in results%}
+                                <th scope="row">{{forloop.counter}}</th>
+
+                                {% comment %} <td scope="row">{{i.userid}}</td>
+                                <td scope="row">{{i.categoryid.categoryName}}</td> {% endcomment %}
+                                
+                                <div class="img-wrap">
+                                    <td scope="row" class="w-10 h-10"> <img src="{{i.productThumbnail.url}}" class="card-img-top " alt="category image" style="height: 20%; width: 200%;}"> 
+                                    </td></div>
+                                <td scope="row">{{i.productname}}</td>
+                                <td scope="row">{{i.productdescription}}</td>
+                                <td scope="row">{{i.productmetaTitle}}</td>
+                                <td scope="row">{{i.productqty}}</td>
+
+
+                                <div class="img-wrap">
+                                <td scope="row" class="w-10 h-10"> <img src="{{i.productimages.url}}" class="card-img-top " alt="category
+                                        image" style="height: 20%; width: 200%;}"> 
+                                </td></div>
+                                <td scope="row">{{i.productprice}}</td>
+                                
+                                <td scope="row">{{i.productdiscountPercentage}}</td>
+                                <td scope="row">{{i.productdiscountPrice}}</td>
+                                <td scope="row">{{i.gsttax}}</td>
+                                <td scope="row">{{i.productfinalPrice}}</td>
+
+                                <td>
+                                <input type="checkbox" checked data-toggle="toggle" data-on="Enable" data-off="Disable " value="" data-onstyle="success" data-offstyle="danger">
+                                </td>
+
+                                <td>{{i.createdate}}</td>
+                                <td>{{i.updatedate}}</td>
+
+                                <td>
+                                    <a href="#updModal-{{forloop.counter}}" class="btn btn-success" data-toggle="modal"><i class="fa-regular fa-pen-to-square"></i> </a>
+                                </td>
+                                <td> 
+                                    <a href="/productDelete/{{ i.id }}" onclick="return confirm('Are You Sure,You want to delete this data?');" class="btn btn-danger"><i class='fas fa-trash-alt'></i> </a> 
+                                </td>
+         
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+{% comment %} ---------------------------------------------------------------ADD MODAL------------------------------------------------------------------------------- {% endcomment %}
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Product Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/productInsert/" method="post" enctype="multipart/form-data">
+                    {% csrf_token%}
+                    <div class="form-group">
+                         <label for="sel1" class="col-form-label">User Id</label>
+                        <input type="text" class="form-control"  id="userId" required name="userId"><br>
+
+                        {% comment %} <select class="form-control" id="userId" name="userId">
+                        {%for User in users%}
+                          <option value='{{User.id}}'>{{User.username}}</option>
+                        {%endfor%} 
+                        </select><br> {% endcomment %}
+
+                        {% comment %} <label for="sel1">Category Id</label>
+                        <select class="form-control" id="userId" name="categoryId">
+                            {%for User in category %}
+                            <option value='{{User.id}}'>{{User.categoryName}}</option>
+                            {%endfor%}
+                        </select><br>  {% endcomment %}
+                        <label for="recipient-name" class="col-form-label">Product Thumbnail:</label>                          
+                        <input type="file" class="form-control" id="myFile" required name='myFile'  ><br>
+                        
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>                         
+                        <input type="text" class="form-control"  id="productName" required name="productName"><br>
+
+                        <label for="recipient-name" class="col-form-label">Product description:</label>                         
+                        <textarea  class="form-control" id="productDescription" required name="productDescription"></textarea><br>
+
+                        <label for="recipient-name" class="col-form-label">Product Title:</label>                         
+                        <input type="text" class="form-control"  id="productTitle" required name="productTitle"><br>
+
+                        <label for="recipient-name" class="col-form-label">Quantity:</label>                         
+                        <input type="number" class="form-control" id="Productqty" required name="Productqty"><br>
+
+                        <label for="recipient-name" class="col-form-label">Product Image:</label>                          
+                        <input type="file" class="form-control" id="myFile" required name="File" multiple ><br>
+
+                        <label for="recipient-name" class="col-form-label">Product price:</label>                         
+                        <input type="number" class="form-control" id="price" required name="price" oninput="calculateFinalPrice()" ><br>
+
+                        <label for="recipient-name" class="col-form-label">Gst tax:</label>                         
+                        <input type="number" class="form-control" id="gst" required name="gst" oninput="calculateFinalPrice()" ><br>
+
+                        <label for="recipient-name" class="col-form-label">discount Percent:</label>                         
+                        <input type="number" class="form-control" id="discount" required name="discount" oninput="calculateFinalPrice()" ><br>
+                        
+                        <label for="recipient-name" class="col-form-label">discount Price:</label>                         
+                        <input type="number" class="form-control" id="discount-price" required name="discount-price" oninput="calculateFinalPrice()" ><br>
+                        
+                        <label for="recipient-name" class="col-form-label">final Price:</label>                         
+                        <input type="number" class="form-control" id="final-price"  readonly name="final-price" ><br>
+
+                       
+                            <div class="modal-footer " style=" margin-bottom: -36px;
+                            margin-right: -24px;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="success" class="btn btn-primary">Submit</button>
+                            </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %} ---------------------------------------------------------------UPDATE MODAL------------------------------------------------------------------------------- {% endcomment %}
+{% for i in results%}
+<div class="modal fade" id="updModal-{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Product Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/productUpdate/{{i.id}}" method="post" enctype="multipart/form-data">
+                    {% csrf_token%}
+                    <div class="form-group">
+                        <label for="sel1">User Id</label>
+                        <input type="text" class="form-control" value="{{i.userid}}" id="userId" required name="userId"><br>
+
+                        {% comment %} <select class="form-control" id="userId" name="userId">
+                            {%for User in users%}
+                            <option value='{{User.id}}'>{{User.username}}</option>
+                            {%endfor%}
+                        </select><br> {% endcomment %}
+{% comment %} 
+                        <label for="sel1">Category Id</label>
+                        <select class="form-control" id="userId" name="categoryId">
+                            {%for User in category%}
+                            <option value='{{User.id}}'>{{User.categoryName}}</option>
+                            {%endfor%}
+                        </select><br> {% endcomment %}
+
+                        <img src="{{i.productThumbnail.url}}" class="card-img-top " alt="category image" style=" width: 30%; height:30%;   top: 0; "><br><br>
+                        <label for="recipient-name" class="col-form-label">Product Thumbnail:</label><br>
+                        <input type="file" class="form-control" id="myFile"  name="myFile">
+
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>                         
+                        <input type="text" class="form-control" value="{{i.productname}}" id="productName" required name="productName"><br>
+
+                        <label for="recipient-name" class="col-form-label">Product description:</label>                         
+                        <textarea  class="form-control" id="productDescription" required name="productDescription">{{i.productdescription}}</textarea><br>
+
+                        <label for="recipient-name" class="col-form-label">Product Title:</label>                         
+                        <input type="text" class="form-control" value="{{i.productmetaTitle}}" id="productTitle" required name="productTitle"><br>
+
+                        <label for="recipient-name" class="col-form-label">Quantity:</label>                         
+                        <input type="number" class="form-control"  value="{{i.productqty}}" id="Productqty" required name="Productqty"><br>
+
+                        <img src="{{i.productimages.url}}" class="card-img-top " alt="category image" style=" width: 30%; height:30%;   top: 0; "><br><br>
+                        <label for="recipient-name" class="col-form-label">Product Image:</label><br>
+                        <input type="file" class="form-control" id="File"  name="File" multiple>
+
+                        <label for="recipient-name" class="col-form-label">Product price:</label>                         
+                        <input type="number" class="form-control" value="{{i.productprice}}" id="price" required name="price" oninput="calculateFinalPrice()" ><br>
+
+                        <label for="recipient-name" class="col-form-label">Gst tax:</label>                         
+                        <input type="number" class="form-control" value="{{i.gsttax}}" id="gst" required name="gst" oninput="calculateFinalPrice()" ><br>
+
+                        <label for="recipient-name" class="col-form-label">discount Percent:</label>                         
+                        <input type="number" class="form-control" value="{{i.productdiscountPercentage}}" id="discount" required name="discount" oninput="calculateFinalPrice()" ><br>
+                        
+                        <label for="recipient-name" class="col-form-label">discount Price:</label>                         
+                        <input type="number" class="form-control" value="{{i.productdiscountPrice}}" id="discount-price" required name="discount-price" oninput="calculateFinalPrice()" ><br>
+                        
+                        <label for="recipient-name" class="col-form-label">final Price:</label>                         
+                        <input type="number" class="form-control"  value="{{i.productfinalPrice}}" id="final-price"  readonly name="final-price" ><br>
+
+                       
+                        <div class="modal-footer " style=" margin-bottom: -36px;
+                            margin-right: -24px;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="success" class="btn btn-primary">Submit</button>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endfor%}
+
+<style>
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even){background-color: #f2f2f2}
+    </style>
+    
+        <script>
+            function calculateFinalPrice() {
+              // Get the input values
+              const price = document.getElementById("price").value;
+              const discount = document.getElementById("discount").value;
+              const gst = document.getElementById("gst").value;
+              const discountprice = document.getElementById("discount-price").value;
+              
+            
+            
+              // Calculate the discount price
+              const discountAmount = price * (discount / 100);
+              const discountPrice = price - discountAmount;
+              document.getElementById("discount-price").value = (price - discountPrice).toFixed(1);
+              
+            
+              // Calculate the final price
+              const gstAmount = price * (gst / 100);
+              const finalPrice = discountPrice + gstAmount;
+              document.getElementById("final-price").value = finalPrice.toFixed(1);
+            }
+        
+    </script>
+{% endblock body%}

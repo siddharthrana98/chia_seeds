@@ -1,0 +1,253 @@
+{% extends 'adminTemplate/base.html' %} {% load static %} {% block body %}
+
+<div style="overflow-x:auto;" class="container">
+    <table class="table table-dark table-striped">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8" style="margin-top: 10px; margin-left:
+                    -15px; ">
+                    <h3 style="position: static;"><b>Product Reviews</b></h3>
+                </div>
+                <div class="col-sm-4 text-end">
+
+                    <div class="mr-5">
+                        <a href='' class="btn btn-primary" style=" padding: 12px
+                            25px; margin-top: 10px; margin-right: -38px; position: static; padding-left:10px;" data-toggle="modal" data-target="#addModal"> <i class="fa-solid fa-plus"></i> Add New</a>
+
+                    </div>
+                </div><br><br>
+                <div class="col-13" >
+                    <table class="table table-bordered mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sno.</th>
+                                {% comment %} <th scope="col" >userid</th>
+                                <th scope="col">categoryid</th> {% endcomment %}
+                                <th scope="col">user</th>
+                                <th scope="col">product</th>
+                                <th scope="col">reviewDescription</th>
+                                <th scope="col">reviewTitle</th>
+                                <th scope="col">reviewRating</th>
+                                <th scope="col">reviewImage</th>
+                                <th scope="col">createdate</th>    
+                                <th scope="col">updatedate</th>                                
+                                <th scope="col">Update</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                
+                                {% for i in results%}
+                                <th scope="row">{{forloop.counter}}</th>
+
+                                <td scope="row">{{i.user}}</td> 
+                                <td scope="row">{{i.product_name}}</td>
+                                <td scope="row">{{i.reviewDescription}}</td>
+                                <td scope="row">{{i.reviewTitle}}</td>
+                                <td scope="row">{{i.reviewRating}}</td>
+
+
+                                <div class="img-wrap">
+                                <td scope="row" class="w-10 h-10"> <img src="{{i.reviewImage.url}}" class="card-img-top " alt="category
+                                        image" style="height: 20%; width: 200%;}"> 
+                                </td></div>
+                                
+                              
+
+                                <td>{{i.createDate}}</td>
+                                <td>{{i.updateDate}}</td>
+
+                                <td>
+                                    <a href="#updModal-{{forloop.counter}}" class="btn btn-success" data-toggle="modal"><i class="fa-regular fa-pen-to-square"></i> </a>
+                                </td>
+                                <td> 
+                                    <a href="/Delte_Review/{{ i.id }}" onclick="return confirm('Are You Sure,You want to delete this data?');" class="btn btn-danger"><i class='fas fa-trash-alt'></i> </a> 
+                                </td>
+         
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+{% comment %} ---------------------------------------------------------------ADD MODAL------------------------------------------------------------------------------- {% endcomment %}
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Product -Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/Insertreview/" method="post" enctype="multipart/form-data">
+                    {% csrf_token%}
+                    <div class="form-group">
+                         <label for="sel1" class="col-form-label">user </label>
+                        <input type="text" class="form-control"  id="user" required name="user"><br>
+
+                        {% comment %} <select class="form-control" id="userId" name="userId">
+                        {%for User in users%}
+                          <option value='{{User.id}}'>{{User.username}}</option>
+                        {%endfor%} 
+                        </select><br> {% endcomment %}
+
+                        {% comment %} <label for="sel1">Category Id</label>
+                        <select class="form-control" id="userId" name="categoryId">
+                            {%for User in category %}
+                            <option value='{{User.id}}'>{{User.categoryName}}</option>
+                            {%endfor%}
+                        </select><br>  {% endcomment %}
+                        {% comment %} <label for="recipient-name" class="col-form-label">product Thumbnail:</label>                          
+                        <input type="file" class="form-control" id="myFile" required name='myFile'  ><br> {% endcomment %}
+                        
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>                         
+                        <input type="text" class="form-control"  id="product" required name="product_name"><br>
+
+                        <label for="recipient-name" class="col-form-label">Review - Description:</label>                         
+                        <textarea  class="form-control" id="reviewDescription" required name="reviewDescription"></textarea><br>
+
+                        <label for="recipient-name" class="col-form-label">Review Title:</label>                         
+                        <input type="text" class="form-control"  id="reviewTitle" required name="reviewTitle"><br>
+
+                        <label for="recipient-name" class="col-form-label">Review - Rating</label>                          
+                        <input type="number" class="form-control" id="reviewRating" required name="reviewRating" multiple ><br>
+
+                        <label for="recipient-name" class="col-form-label">Review - Image</label>                         
+                        <input type="file" class="form-control" id="myFile" required name="reviewimage" multiple><br>
+
+                       
+                            <div class="modal-footer " style=" margin-bottom: -36px;
+                            margin-right: -24px;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="success" class="btn btn-primary">Submit</button>
+                            </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %} ---------------------------------------------------------------UPDATE MODAL------------------------------------------------------------------------------- {% endcomment %}
+{% for i in results%}
+<div class="modal fade" id="updModal-{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Product Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/update_review/{{i.id}}" method="post" enctype="multipart/form-data">
+                    {% csrf_token%}
+                    <div class="form-group">
+                         <label for="sel1" class="col-form-label">user </label>
+                        <input type="text" class="form-control"  id="user" required name="user"><br>
+
+                        {% comment %} <select class="form-control" id="userId" name="userId">
+                        {%for User in users%}
+                          <option value='{{User.id}}'>{{User.username}}</option>
+                        {%endfor%} 
+                        </select><br> {% endcomment %}
+
+                        {% comment %} <label for="sel1">Category Id</label>
+                        <select class="form-control" id="userId" name="categoryId">
+                            {%for User in category %}
+                            <option value='{{User.id}}'>{{User.categoryName}}</option>
+                            {%endfor%}
+                        </select><br>  {% endcomment %}
+                        {% comment %} <label for="recipient-name" class="col-form-label">product Thumbnail:</label>                          
+                        <input type="file" class="form-control" id="myFile" required name='myFile'  ><br> {% endcomment %}
+                        
+                        <label for="recipient-name" class="col-form-label">Product Name:</label>                         
+                        <input type="text" class="form-control"  id="product" required name="product_name"><br>
+
+                        <label for="recipient-name" class="col-form-label">Review - Description:</label>                         
+                        <textarea  class="form-control" id="reviewDescription"  name="R_description" required></textarea><br>
+
+                        <label for="recipient-name" class="col-form-label">Review Title:</label>                         
+                        <input type="text" class="form-control"  id="reviewTitle"  name="R_title" required><br>
+
+                        <label for="recipient-name" class="col-form-label">Review - Rating</label>                          
+                        <input type="number" class="form-control" id="reviewRating"  name="R_rating" multiple required ><br>
+
+                        <label for="recipient-name" class="col-form-label">Review - Image</label>                         
+                        <input type="file" class="form-control" id="myFile"  name="R_image" multiple  required><br>
+
+                       
+                            <div class="modal-footer " style=" margin-bottom: -36px;
+                            margin-right: -24px;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="success" class="btn btn-primary">Submit</button>
+                            </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endfor%}
+
+<style>
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      border: 1px solid #ddd;
+    }
+    
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even){background-color: #f2f2f2}
+    </style>
+    
+        <script>
+            function calculateFinalPrice() {
+              // Get the input values
+              const price = document.getElementById("price").value;
+              const discount = document.getElementById("discount").value;
+              const gst = document.getElementById("gst").value;
+              const discountprice = document.getElementById("discount-price").value;
+              
+            
+            
+              // Calculate the discount price
+              const discountAmount = price * (discount / 100);
+              const discountPrice = price - discountAmount;
+              document.getElementById("discount-price").value = (price - discountPrice).toFixed(1);
+              
+            
+              // Calculate the final price
+              const gstAmount = price * (gst / 100);
+              const finalPrice = discountPrice + gstAmount;
+              document.getElementById("final-price").value = finalPrice.toFixed(1);
+            }
+        
+    </script>
+{% endblock body%}

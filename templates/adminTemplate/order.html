@@ -1,0 +1,239 @@
+{% extends 'adminTemplate/base.html' %}
+
+{% load static %}
+
+{% block body  %}
+<div class="container">
+    <table class="table table-dark table-striped">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8" style="margin-top: 10px; margin-left:
+                    -15px; ">
+                    <h3><b>Order-Managent </b></h3>
+                </div>
+                <div class="col-sm-4 text-end">
+
+                    <div>
+                        <a href='' class="btn btn-primary" style=" padding: 12px
+                            34px; margin-top: 10px; margin-right: -38px;" data-toggle="modal" data-target="#addModal"> <i class="fa-solid fa-plus"></i> Add New</a>
+
+                    </div>
+                </div><br><br>
+                <div class="col-13">
+                    <table class="table table-bordered mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sno.</th>
+                                <th scope="col" class="w-10">ProductStockId</th>
+                                <th scope="col">OrderId</th>
+                                <th scope="col">Order Quantity</th>
+                                <th scope="col">TranctionNumber</th>
+                                <th scope="col">DeliveryCharge</th>
+                                <th scope="col">OrderStatus</th>
+                                <th scope="col">PaymentMethod</th>
+                                <th scope="col">ShipingInfo</th>
+                                <th scope="col">BillingInfo</th>
+                                <th scope="col">Paymentstatus</th>
+                                <th scope="col">OrderComment</th>
+                                <th scope="col">Update</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {% for data in UserCart %}
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td scope="row">{{data.user}}</td>
+                                <td scope="row">{{data.product.productname}}</td>
+                                <td scope="row">{{data.orderQty}}</td>
+                    
+                               
+                                <td>
+                                    <a href="#updModal-{{forloop.counter}}" class="btn btn-success" data-toggle="modal"><i class="fa-regular fa-pen-to-square"></i>
+                                           
+                                    </a>
+                                </td>
+
+                                <td> 
+                                    <a href="/Delte_usercart/{{ data.id }}" onclick="return confirm('Are You Sure,You want to delete this data?');" class="btn btn-danger"><i class='fas fa-trash-alt'></i>
+                                    </a> 
+                                </td>
+
+                            </tr>
+                            {%endfor%}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </table>
+</div>
+
+
+
+
+
+{% comment %} ---------------------------------------------------------------ADD MODAL------------------------------------------------------------------------------- {% endcomment %}
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Order-Management</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/usercart/" method="post">
+                    {% csrf_token%}
+                    <div class="form-group">
+
+                        <div class="form-group">
+                            <label for="sel1">ProductStockId</label>
+                            <select class="form-control" id="userId" name="user">
+                                {%for User in users%}
+                                <option value='{{User.id}}'>{{User.username}}</option>
+                                {%endfor%}
+                            </select><br>
+                    
+
+                        <label for="sel1">OrderId</label>
+                        <select class="form-control" id="productid" name="product">
+                            {%for product in Product%}
+                            <option value='{{product.id}}'>{{product.productname}}</option>
+                            {%endfor%}
+                        </select><br>
+                           
+                        <label for="recipient-name" class="col-form-label">Product-Quantity:</label>
+                        <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+
+                        <label for="recipient-name" class="col-form-label">OrderId:</label>   
+                        <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                        
+                        <label for="recipient-name" class="col-form-label">Order Quantity:</label>     
+                        <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+
+                        <label for="recipient-name" class="col-form-label">TranctionNumber:</label>   
+                        <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                        
+                        <label for="recipient-name" class="col-form-label">DeliveryCharge:</label>   
+                        <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                        
+                        <label for="recipient-name" class="col-form-label">OrderStatus:</label>   
+                        <input type="text" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                        
+                        <label for="recipient-name" class="col-form-label">PaymentMethod:</label>   
+                        <input type="text" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                        
+                        <label for="recipient-name" class="col-form-label">ShipingInfo:</label>   
+                        <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                        
+                        <label for="recipient-name" class="col-form-label">BillingInfo:</label>   
+                        <input type="text" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                        
+                        <label for="recipient-name" class="col-form-label">Paymentstatus:</label>   
+                        <input type="text" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                        
+                        <label for="recipient-name" class="col-form-label">OrderComment:</label>   
+                        <input type="text" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                        
+                      
+                        <div class="modal-footer " style=" margin-bottom: -36px;
+                            margin-right: -24px;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="success" class="btn btn-primary">Submit</button>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function switchFunction(id, status){
+        
+        window.location.href=`{{baseURL}}/changeStatusofffercard/${id}`;
+    }
+</script>
+{% comment %} -----------------------------------------------------------Update Modal------------------------------------------------------------------------------------------ {% endcomment %}
+ 
+{% for data in UserCart %} 
+
+<div class="modal fade" id="updModal-{{forloop.counter}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Categories</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/update_cart/{{data.id}}" method="post" enctype="multipart/form-data">
+                    {% csrf_token%}
+                        <div class="form-group">
+                            <label for="sel1">User Id</label>
+                            <select class="form-control" id="userId" name="user">
+                                {%for User in users%}
+                                <option value='{{User.id}}'>{{User.username}}</option>
+                                {%endfor%}
+                            </select><br>
+                       
+                           
+                            <label for="recipient-name" class="col-form-label">Product-Quantity:</label>
+                            <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+    
+                            <label for="recipient-name" class="col-form-label">OrderId:</label>   
+                            <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                            
+                            <label for="recipient-name" class="col-form-label">Order Quantity:</label>     
+                            <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+    
+                            <label for="recipient-name" class="col-form-label">TranctionNumber:</label>   
+                            <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                            
+                            <label for="recipient-name" class="col-form-label">DeliveryCharge:</label>   
+                            <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                            
+                            <label for="recipient-name" class="col-form-label">OrderStatus:</label>   
+                            <input type="text" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                            
+                            <label for="recipient-name" class="col-form-label">PaymentMethod:</label>   
+                            <input type="text" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                            
+                            <label for="recipient-name" class="col-form-label">ShipingInfo:</label>   
+                            <input type="number" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                            
+                            <label for="recipient-name" class="col-form-label">BillingInfo:</label>   
+                            <input type="text" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                            
+                            <label for="recipient-name" class="col-form-label">Paymentstatus:</label>   
+                            <input type="text" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                            
+                            <label for="recipient-name" class="col-form-label">OrderComment:</label>   
+                            <input type="text" class="form-control" id="recipient-name"  name="orderQty" required><br>
+                            
+                          
+                            <div class="modal-footer " style=" margin-bottom: -36px;
+                                margin-right: -24px;">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="success" class="btn btn-primary">Submit</button>
+                            </div>
+    
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endfor%}
+{% endblock body%}

@@ -1,0 +1,94 @@
+{% load static %}
+<aside class="navbar-aside" id="offcanvas_aside">
+
+    <div class="aside-top" style='height: 90px;'>
+        <a href="index.html" class="brand-wrap">
+            <img class="animation__shake" src="{% static 'adminstatic/assets/imgs/logo/logo.png' %}" alt="AdminLTELogo" width="75">
+            {% comment %} <img src="{%static 'assets/imgs/theme/sutlogo.png' %}" class="logo" alt="StartUp Tanks" /> {% endcomment %}
+        </a>
+        <div>
+            <button class="btn btn-icon btn-aside-minimize"><i class="text-muted material-icons md-menu_open"></i></button>
+        </div>
+    </div>
+
+    <nav>
+        <div class="container" > 
+        <ul class="menu-aside">
+            <li class="menu-item {{dashboard_active}}">
+                <a class="menu-link" href="{% url 'dashboardpage' %}">
+                    <i class="icon material-icons md-home mr-2"></i>
+                    <span class="text">Dashbord</span>
+                </a>
+            </li>
+        </ul>
+        </div>
+        
+        <div class="container">
+            <ul class="menu-aside">
+                <li class="menu-item {{dashboard_active}}">
+                    <a class="menu-link" href="{% url 'offer_apply' %}">
+                        <i class="fa-solid fa-bookmark  mr-2" style="color: #999fa8;" ></i>
+                        <span class="text ms-2">Offer</span>
+                    </a>
+                </li>
+            </div>
+
+                <div class="container">
+                <ul class="menu-aside">
+                    <li class="menu-item">
+                        <a class="menu-link" href="{% url 'product' %}">
+                            <i class="fa-solid fa-store  mr-2" style="color: #adafb3;" > </i>
+                            {% comment %} <i class="fa-solid fa-cart-shopping fa-xl" style="color:#ADB5BD margin-left '2px'" ></i> {% endcomment %}
+                            <span class="text">Products</span>
+                        </a>
+                    </li>
+                </ul>
+                <div>
+
+                <div class="container"> 
+            <ul class="menu-aside">
+            <li class="menu-item">
+                <a class="menu-link" href="{% url 'product-review' %}">
+                    {% comment %} <i class="fa-sharp fa-solid fa-star" style="color:#ADB5BD"></i> {% endcomment %}
+                    <i class="fa-solid fa-star  mr-2"  style="color:#ADB5BD "></i>
+                    <span class="text">Product-Reviews</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+        <div class="container">
+        <ul class="menu-aside">
+            <li class="menu-item">
+                <a class="menu-link" href="{% url 'usercart' %}">
+                    <i class="fa-solid fa-cart-plus  mr-2" style="color:#ADB5BD"></i>
+                    <span class="text">User-Cart</span>
+                </a>
+            </li>
+        </ul>
+        <div class="container" > 
+            <ul class="menu-aside">
+                <li class="menu-item {{dashboard_active}}">
+                    <a class="menu-link" href="{% url 'order' %}">
+                        <i class="icon material-icons md-home mr-2"></i>
+                        <span class="text">Order-Management</span>
+                    </a>
+                </li>
+            </ul>
+            </div>
+
+        <br/>
+        <br/>
+    </nav>
+</div>
+</aside>
+
+
+<style>
+    .menu-aside {
+        list-style: none;
+        margin: 0rem;
+        padding: 0px;
+    }
+    
+</style>

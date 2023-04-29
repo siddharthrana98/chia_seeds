@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>login</title>
+</head>
+
+<body>
+        <div class="container-fluid">
+            <div class="row d-flex flex-row align-items-center" style="height:100vh;">
+                <div class="col-xl-7 d-none d-xl-block">
+                    <img src="https://img.freepik.com/free-vector/man-sitting-desk-unlocking-computer-computer-settings-login-flat-illustration_74855-20645.jpg?w=740&t=st=1671630530~exp=1671631130~hmac=5d00b0d78aea5c01fbaeec23e626d28395870a6ead15a22cb91115ed2f4da408" alt="backgrounimg">
+                    {% comment %} <div class="main-box" style="background: url('https://img.freepik.com/free-vector/man-sitting-desk-unlocking-computer-computer-settings-login-flat-illustration_74855-20645.jpg?w=740&t=st=1671630530~exp=1671631130~hmac=5d00b0d78aea5c01fbaeec23e626d28395870a6ead15a22cb91115ed2f4da408');   background-repeat: no-repeat; background-size: 85%;">
+                        
+                    </div> {% endcomment %}
+                </div>
+
+                <div class="col-xl-4">
+                    <div class="card insidebox p-4"style='box-shadow: 0px 3px 17px #000000;'>
+                        <div class="container-fluid">
+                            {% for msg in messages %}
+                                {% if msg %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{msg}}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="row mt-3 ml-1">
+                                <h1><span class='text-danger'>LO</span><span style="color: #131389;">GO</span></h1>
+                            </div>
+                            <div class="row ml-1">
+                                <h2 class="fs-5" style="color: #1d3590;">Welcome Back</h2>
+                            </div>
+                            <div class='mt-3'> 
+                                <form method="POST" action="{% url 'loginuser' %}">
+                                    {%csrf_token%}
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                                        <input type="text" name="username" class="form-control w-100" id="exampleFormControlInput1" placeholder="name@example.com">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlInput1" class="form-label">Password</label>
+                                        <input type="password" name="password" class="form-control" id="exampleFormControlInput1">
+                                    </div>
+
+                                    <div class="form-check lableText mt-3">
+                                        <input class="form-check-input" type="checkbox" value="" style="font-size: 11px;" id="flexCheckDefault">
+                                        <label class="form-check-label" style="font-size: 11px;" for="flexCheckDefault">
+                                            Remember me on this computer
+                                        </label>
+                                    </div>
+
+                                    <div class="d-grid gap-2 mt-2">
+                                        <button type="submit" class="btn text-light w-100" style="background: #1e4178; font-size:15px;" type="button">LOG IN</button>
+                                    </div>
+
+                                    <div class="text-center my-3" style="font-size: 11px;">
+                                        <a href="" class="text-decoration-none" style="color:#f2451c;">Forgot Password?</a>
+                                    </div>
+                                    <div class="text-center my-3" style="font-size: 15px;">
+                                        <a href="" class="text-decoration-none" style="color:#1d3590;
+                                        text-decoration: none;">CREATE A NEW ACCOUNT</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    {% comment %} <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script> {% endcomment %}
+</body>
+</html>
